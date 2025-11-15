@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Capacity-Based Route Planner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <h2>Route Planner</h2>
+    <div id="panel">
+        <div class="row">
+            <div id="depotPanel">
+                <input id="depotInput" type="text" placeholder="Set your depot" />
+                <button id="setDepotBtn" onclick="setDepot()">Set Depot</button>
+                <div id="depot_data"></div>
+            </div>
+        </div>
+
+        <div class="row">
+          <div id="pointPanel">
+            <input id="pointInput" class="controls" type="text" placeholder="add points" />
+            <input id="demandInput" type="number" placeholder="num People" min="1" />
+            <button id="addBtn" onclick="addPoint()">Add Point</button>
+            <div id="pointContainer"></div>
+          </div>
+          <button id="generateBtn" onclick="generateRoutes()">Generate Routes</button>
+        </div>
+        
+    </div>
+    
+    
+    <div id="map"></div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='util.js') }}"></script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key={{ google_map_api }}&libraries=places&callback=initMap">
+    </script>
+  </body>
+</html>
