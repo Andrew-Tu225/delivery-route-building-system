@@ -14,6 +14,8 @@ function setDepot() {
   const cancelBtn = document.createElement("button");
   cancelBtn.textContent = "Cancel";
 
+  depotDiv.id = "depot-data";
+
   cancelBtn.onclick = cancelDepot;
 
   name.textContent = `Depot: ${selectedPlace.name}`;
@@ -102,4 +104,40 @@ function cancelPoint(pointDiv){
   pointDiv.remove();
   document.getElementById("pointInput").value = "";
   document.getElementById("demandInput").value = "";
+}
+
+async function generateRoutes(){
+  const depotDiv = document.getElementById("depot-data");
+
+  depot = {
+    name : depotDiv.dataset.name,
+    lat : depotDiv.dataset.lat,
+    lng : depotDiv.dataset.lng
+  }
+
+  points = [];
+  const pointsContainer = document.getElementById("pointContainer");
+  const pointsDiv = pointsContainer.querySelectorAll("div");
+
+  pointsDiv.forEach(pointDiv => {
+    point = {
+      name : pointDiv.dataset.name,
+      lat : pointDiv.dataset.lat,
+      lng : pointDiv.dataset.lng,
+      demand : pointDiv.dataset.demand
+    }
+    points.push(point);
+  })
+
+  const res = await fetch("api/generate-routes", {
+    method : "POST",
+    headers : { "Content-Type": "application/json" },
+    body : JSON.stringify({
+      depot,
+      points,
+      vehicleCapacity: 30,
+    }),
+  })
+
+  console.log(res);
 }
