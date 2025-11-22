@@ -64,16 +64,14 @@ function addPoint(){
 
   let newPointDiv = document.createElement("div");
   let name = document.createElement("p");
-  let coordinate = document.createElement("p");
   let numPeople = document.createElement("p");
   let cancelBtn = document.createElement("button");
 
   cancelBtn.textContent = "cancel";
   cancelBtn.onclick = () => cancelPoint(newPointDiv)
 
-  name.textContent = `Point: ${selectedPoint.name}`;
-  coordinate.textContent = `(${selectedPoint.geometry.location.lat().toFixed(5)}, ${selectedPoint.geometry.location.lng().toFixed(5)})`;
-  numPeople.textContent = demand;
+  name.textContent = `Address: ${selectedPoint.name}`;
+  numPeople.textContent = `Demand: ${demand}`;
 
   newPointDiv.dataset.name = selectedPoint.name;
   newPointDiv.dataset.lat = selectedPoint.geometry.location.lat();
@@ -81,7 +79,6 @@ function addPoint(){
   newPointDiv.dataset.demand = demand;
 
   newPointDiv.appendChild(name);
-  newPointDiv.appendChild(coordinate);
   newPointDiv.appendChild(numPeople);
   newPointDiv.appendChild(cancelBtn);
 

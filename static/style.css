@@ -5,10 +5,81 @@
 #panel {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 10px;
+  gap: 16px;
+  padding: 12px;
+  width: fit-content;
 }
-#depot_data {
-  margin-top: 10px;
+
+#contentRow {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  padding: 12px;
+  align-items: flex-start;
+}
+
+/* Left side: inputs */
+#leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Each input panel vertically aligned */
+#depotPanel,
+#pointPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Right side: data */
+#rightColumn {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  min-width: 300px;
+  justify-content: space-between;
+}
+
+/* pointContainer grows horizontally */
+#pointContainer:not(:empty){
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+/* depot items & point items */
+.point-item, .depot-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 12px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+
   font-size: 14px;
+  color: #333;
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.remove-btn {
+  padding: 0 6px;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+  color: #777;
+}
+
+.remove-btn:hover {
+  color: #d33;
 }

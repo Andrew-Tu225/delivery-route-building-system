@@ -7,25 +7,48 @@
   <body>
     <h2>Route Planner</h2>
     <div id="panel">
-        <div class="row">
-            <div id="depotPanel">
-                <input id="depotInput" type="text" placeholder="Set your depot" />
-                <button id="setDepotBtn" onclick="setDepot()">Set Depot</button>
-                <div id="depot_data"></div>
-            </div>
-        </div>
 
-        <div class="row">
-          <div id="pointPanel">
-            <input id="pointInput" class="controls" type="text" placeholder="add points" />
-            <input id="demandInput" type="number" placeholder="num People" min="1" />
-            <button id="addBtn" onclick="addPoint()">Add Point</button>
-            <div id="pointContainer"></div>
+      <div id="contentRow">
+        
+        <!-- LEFT SIDE: Inputs -->
+        <div id="leftColumn">
+          <div id="depotPanel">
+            <label for="depotInput">Depot Address</label>
+            <input id="depotInput" type="text" placeholder="Set your depot" />
+            <button id="setDepotBtn" onclick="setDepot()">Set Depot</button>
           </div>
+
+          <div id="pointPanel">
+            <label for="pointInput">Point Address</label>
+            <input id="pointInput" type="text" placeholder="Add points" />
+
+            <label for="demandInput">Demand (Number of People)</label>
+            <input id="demandInput" type="number" placeholder="num People" min="1" />
+            
+            <button id="addBtn" onclick="addPoint()">Add Point</button>
+          </div>
+
           <button id="generateBtn" onclick="generateRoutes()">Generate Routes</button>
         </div>
-        
+
+        <!-- RIGHT SIDE: Data Lists -->
+        <div id="rightColumn">
+          <div>
+            <h4>Depot</h4>
+            <div id="depot_data"></div>
+          </div>
+          
+          <div>
+            <h4>Points</h4>
+            <div id="pointContainer"></div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+
+
     
     
     <div id="map"></div>
