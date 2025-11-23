@@ -9,28 +9,17 @@ function setDepot() {
   // Show depot info
   depotContainer.innerHTML = "";
   const depotDiv = document.createElement("div");
-  const name = document.createElement("p");
-  const coords = document.createElement("p");
-  const cancelBtn = document.createElement("button");
-  cancelBtn.textContent = "Cancel";
-
   depotDiv.id = "depot-data";
-
-  cancelBtn.onclick = cancelDepot;
-
-  name.textContent = `Depot: ${selectedPlace.name}`;
-  coords.textContent = `(${selectedPlace.geometry.location.lat().toFixed(5)}, ${selectedPlace.geometry.location.lng().toFixed(5)})`;
 
   depotDiv.dataset.name = selectedPlace.name;
   depotDiv.dataset.lat = selectedPlace.geometry.location.lat();
   depotDiv.dataset.lng = selectedPlace.geometry.location.lng();
 
-  depotDiv.appendChild(name);
-  depotDiv.appendChild(coords);
-  depotDiv.appendChild(cancelBtn);
   depotContainer.appendChild(depotDiv);
 
   cancelBtn.style.display = "inline-block";
+
+  addContentInfoToDepotMarker(depotMarker, depotDiv);
 }
 
 function cancelDepot() {
@@ -63,28 +52,16 @@ function addPoint(){
   let pointsContainer = document.getElementById("pointContainer");
 
   let newPointDiv = document.createElement("div");
-  let name = document.createElement("p");
-  let numPeople = document.createElement("p");
-  let cancelBtn = document.createElement("button");
-
-  cancelBtn.textContent = "cancel";
-  cancelBtn.onclick = () => cancelPoint(newPointDiv)
-
-  name.textContent = `Address: ${selectedPoint.name}`;
-  numPeople.textContent = `Demand: ${demand}`;
 
   newPointDiv.dataset.name = selectedPoint.name;
   newPointDiv.dataset.lat = selectedPoint.geometry.location.lat();
   newPointDiv.dataset.lng = selectedPoint.geometry.location.lng();
   newPointDiv.dataset.demand = demand;
 
-  newPointDiv.appendChild(name);
-  newPointDiv.appendChild(numPeople);
-  newPointDiv.appendChild(cancelBtn);
-
   pointsContainer.appendChild(newPointDiv);
   
   pointMarkers.push({marker:pointMarker, element:newPointDiv});
+  addContentInfoToPointMarker(pointMarker, newPointDiv);
 
   pointMarker = null;
   selectedPoint = null;
@@ -137,4 +114,73 @@ async function generateRoutes(){
   })
 
   console.log(res);
+}
+
+function addContentInfoToPointMarker(marker, pointDiv){
+  const content = `
+    <div style="font-size:14px; line-height:1.4">
+      <strong>${pointDiv.dataset.name}</strong><br/>
+      Lat: ${pointDiv.dataset.lat}<br/>
+      Lng: ${pointDiv.dataset.lng}<br/>
+      Demand: ${pointDiv.dataset.demand}
+      <button id="cancelPointBtn" style="
+        margin-top: 10px;
+        padding: 6px 10px;
+        background: #e63946;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      ">Cancel Point</button>
+    </div>
+  `;
+
+  marker.addListener("click", () => {
+    infoWindow.setContent(content);
+    infoWindow.open({
+      anchor: marker,
+      map,
+      shouldFocus: false
+    });
+
+    google.maps.event.addListenerOnce(infoWindow, "domready", () => {
+    document
+      .getElementById("cancelPointBtn")
+      .addEventListener("click", () => cancelPoint(pointDiv));
+  });
+  });
+}
+
+function addContentInfoToDepotMarker(marker, depotDiv){
+  const content = `
+    <div style="font-size:14px; line-height:1.4">
+      <strong>${depotDiv.dataset.name}</strong><br/>
+      Lat: ${depotDiv.dataset.lat}<br/>
+      Lng: ${depotDiv.dataset.lng}<br/>
+      <button id="cancelDepotBtn" style="
+        margin-top: 10px;
+        padding: 6px 10px;
+        background: #e63946;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      ">Cancel Depot</button>
+    </div>
+  `;
+
+  marker.addListener("click", () => {
+    infoWindow.setContent(content);
+    infoWindow.open({
+      anchor: marker,
+      map,
+      shouldFocus: false
+    });
+
+    google.maps.event.addListenerOnce(infoWindow, "domready", () => {
+    document
+      .getElementById("cancelDepotBtn")
+      .addEventListener("click", () => cancelDepot());
+  });
+  });
 }

@@ -4,12 +4,16 @@ let depotMarker = null;
 let selectedPoint = null;
 let pointMarker = null;
 let pointMarkers = [];
+let infoWindow;
 
 function initMap() {
   let map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: 43.65, lng: -79.38 },
     zoom: 12,
   });
+
+  infoWindow = new google.maps.InfoWindow();
+
 
   const input = document.getElementById("depotInput");
   const autocomplete = new google.maps.places.Autocomplete(input);

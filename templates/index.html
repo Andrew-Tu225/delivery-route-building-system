@@ -9,13 +9,11 @@
     <div id="panel">
 
       <div id="contentRow">
-        
-        <!-- LEFT SIDE: Inputs -->
-        <div id="leftColumn">
           <div id="depotPanel">
             <label for="depotInput">Depot Address</label>
             <input id="depotInput" type="text" placeholder="Set your depot" />
             <button id="setDepotBtn" onclick="setDepot()">Set Depot</button>
+            <div id="depot_data"></div>
           </div>
 
           <div id="pointPanel">
@@ -26,24 +24,10 @@
             <input id="demandInput" type="number" placeholder="num People" min="1" />
             
             <button id="addBtn" onclick="addPoint()">Add Point</button>
+            <div id="pointContainer"></div>
           </div>
 
           <button id="generateBtn" onclick="generateRoutes()">Generate Routes</button>
-        </div>
-
-        <!-- RIGHT SIDE: Data Lists -->
-        <div id="rightColumn">
-          <div>
-            <h4>Depot</h4>
-            <div id="depot_data"></div>
-          </div>
-          
-          <div>
-            <h4>Points</h4>
-            <div id="pointContainer"></div>
-          </div>
-        </div>
-
       </div>
 
     </div>
