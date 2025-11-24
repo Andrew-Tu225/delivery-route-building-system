@@ -22,7 +22,7 @@ def generate_routes():
     data = request.get_json()
     depot = data['depot']
     points = data['points']
-    capacity = data['vehicleCapacity']
+    capacity = int(data['vehicleCapacity'])
 
     # turn json data into location dataclass
     depot_data = Location(depot["name"], depot["lat"], depot["lng"], 0)

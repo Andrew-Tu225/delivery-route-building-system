@@ -1,8 +1,8 @@
 function setDepot() {
   const depotContainer = document.getElementById("depot_data");
-
-  if (!selectedPlace) {
-    alert("Please search and select a place first!");
+  const vehicleCapacity = Number(document.getElementById("capacityInput").value);
+  if (!selectedPlace | vehicleCapacity=="") {
+    alert("Please search and select a place first and valid vehicle capacity!");
     return;
   }
 
@@ -14,10 +14,9 @@ function setDepot() {
   depotDiv.dataset.name = selectedPlace.name;
   depotDiv.dataset.lat = selectedPlace.geometry.location.lat();
   depotDiv.dataset.lng = selectedPlace.geometry.location.lng();
+  depotDiv.dataset.capacity = vehicleCapacity;
 
   depotContainer.appendChild(depotDiv);
-
-  cancelBtn.style.display = "inline-block";
 
   addContentInfoToDepotMarker(depotMarker, depotDiv);
 }
@@ -109,7 +108,7 @@ async function generateRoutes(){
     body : JSON.stringify({
       depot,
       points,
-      vehicleCapacity: 30,
+      vehicleCapacity: depotDiv.dataset.capacity,
     }),
   })
 
