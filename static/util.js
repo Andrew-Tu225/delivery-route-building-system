@@ -102,6 +102,8 @@ async function generateRoutes(){
     points.push(point);
   })
 
+  console.log(points);
+  
   const res = await fetch("api/generate-routes", {
     method : "POST",
     headers : { "Content-Type": "application/json" },
@@ -112,7 +114,12 @@ async function generateRoutes(){
     }),
   })
 
-  console.log(res);
+  data = await res.json()
+
+  data.forEach(route => {
+    let color = randomNiceColor();
+    drawRouteDriving(route["paths"], color);
+  })
 }
 
 function addContentInfoToPointMarker(marker, pointDiv){
@@ -182,4 +189,45 @@ function addContentInfoToDepotMarker(marker, depotDiv){
       .addEventListener("click", () => cancelDepot());
   });
   });
+}
+
+function drawRouteDriving(routePoints, color) {
+  const g = window.googleMaps;
+  const ds = window.directionsService;
+  const map = window.map;
+
+  const renderer = new g.DirectionsRenderer({
+    map: map,
+    preserveViewport: true,
+    suppressMarkers: false,
+    polylineOptions: {
+      strokeColor: color,
+      strokeWeight: 5
+    }
+  });
+
+  const start = routePoints[0];
+  const end = routePoints[routePoints.length - 1];
+
+  const waypoints = routePoints.slice(1,-1).map(p => ({
+    location: { lat: parseFloat(p[0]), lng: parseFloat(p[1]) },
+    stopover: true
+  }));
+
+  ds.route({
+    origin: {lat: parseFloat(start[0]), lng: parseFloat(start[1])},
+    destination: {lat: parseFloat(end[0]), lng: parseFloat(end[1])},
+    waypoints: waypoints,
+    optimizeWaypoints: false,
+    travelMode: google.maps.TravelMode.DRIVING
+  })
+  .then(res => renderer.setDirections(res))
+  .catch(err => console.error(err));
+}
+
+function randomNiceColor() {
+  const r = Math.floor(100 + Math.random() * 155);
+  const g = Math.floor(100 + Math.random() * 155);
+  const b = Math.floor(100 + Math.random() * 155);
+  return `rgb(${r}, ${g}, ${b})`;
 }

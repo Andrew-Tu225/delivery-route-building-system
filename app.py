@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 import os
 from model.location import Location
+from model.route import Route
 import googlemaps
 from clark_wright_algo import ClarkWrightAlgorithm
 
@@ -34,6 +35,23 @@ def generate_routes():
     clark_wright_algo = ClarkWrightAlgorithm(gmaps)
 
     routes = clark_wright_algo.construct_routes(depot_data, points_data, max_capacity=capacity)
-    print(routes)
+    routes_data = convert_routes_to_data(depot_data, routes)
+    return routes_data
 
-    return routes
+def convert_routes_to_data(depot: Location, routes: list[Route]):
+    routes_data = []
+
+    for route in routes:
+        paths = route.path
+        paths_data = [p.coordinates for p in paths]
+        paths_data.insert(0, depot.coordinates)
+        demand = sum(p.demand for p in paths)
+
+        routes_data.append(
+            {
+                "paths" : paths_data,
+                "demand" : demand
+            }
+        )
+
+    return jsonify(routes_data)

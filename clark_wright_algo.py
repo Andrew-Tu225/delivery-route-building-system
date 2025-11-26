@@ -30,7 +30,6 @@ class ClarkWrightAlgorithm():
         
         # Sort by saving value in descending order
         savings_list.sort(key=lambda x: x.saving_value, reverse=True)
-        print("saving list: ", savings_list)
         return savings_list
     
     def find_routes_with_edge_point(self, point: Location, routes: List[Route]) -> List[int]:

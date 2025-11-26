@@ -4,6 +4,7 @@ let depotMarker = null;
 let selectedPoint = null;
 let pointMarker = null;
 let pointMarkers = [];
+
 let infoWindow;
 
 function initMap() {
@@ -13,6 +14,10 @@ function initMap() {
   });
 
   infoWindow = new google.maps.InfoWindow();
+  
+  window.map = map;
+  window.googleMaps = google.maps;
+  window.directionsService = new google.maps.DirectionsService();
 
 
   const input = document.getElementById("depotInput");
