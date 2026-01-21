@@ -1,113 +1,109 @@
-🗺️ Capacity-Based Route Planner
+# 🗺️ Capacity-Based Route Planner
 
-A professional web application built with Flask and the Google Maps JavaScript API. This tool enables logistics planners and transport coordinators to design optimized routes based on vehicle capacity limits and location-specific demands.
+An advanced web application for logistics optimization. This tool allows users to define a central depot, add delivery points with specific demand requirements, and visualize optimized routing using the Google Maps API.
 
-🚀 Features
+## 📖 Table of Contents
 
-Real-time Visualization: Interactive map interface for managing logistics hubs and delivery points.
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#prerequisites)
+- [Installation & Setup](#-installation--setup)
+- [Google Maps API Configuration](#-google-maps-api-configuration)
+- [Usage Guide](#-usage-guide)
+- [Tech Stack](#-tech-stack)
+- [License](#-license)
 
-Intelligent Search: Integrated with Google Places Autocomplete for pinpoint accuracy.
+## 🔍 Overview
 
-Depot Management: Easily define and modify your central distribution point.
+This project addresses the Capacitated Vehicle Routing Problem (CVRP) by providing a user-friendly interface to input locations and demands. It's designed for small-to-medium delivery fleets looking to visualize and organize their daily routes.
 
-Capacity Tracking: Assign specific "Demand" (people or cargo units) to every stop.
+## 🚀 Key Features
 
-Responsive Design: Fluid UI built with Tailwind CSS, optimized for both desktop and mobile field use.
+- 📍 **Dynamic Depot Setting**: Search and lock your central hub with a single click.
+- 📊 **Demand Management**: Assign specific "Capacity Demand" (e.g., number of passengers or packages) to each stop.
+- 🔍 **Smart Search**: Integrated with Google Places Autocomplete for fast and accurate location entry.
+- 🎨 **Color-Coded Visualization**: Visual distinction between the Depot (Green) and delivery points.
+- 📱 **Fully Responsive**: Designed with Tailwind CSS to work seamlessly on tablets, phones, and desktops.
 
-📁 Project Structure
-
-route-planner/
-├── app.py              # Flask backend server
-├── requirements.txt    # Python dependencies
+## 📁 Project Structure
+```
+delivery-route-building-system/
+├── app.py                 # Main Flask backend application
+├── requirements.txt       # Python dependency list
 ├── templates/
-│   └── index.html      # Main frontend interface
+│   └── index.html        # Frontend UI (Integrated HTML/CSS/JS)
 └── static/
-    ├── css/            # Custom styles
-    └── js/             # Map logic (main.js, util.js)
+    ├── css/              # Custom stylesheets (if separate)
+    └── js/               # Map logic and utility scripts
+```
 
+## 🛠️ Installation & Setup
 
-🛠️ Installation & Setup
+### Prerequisites
 
-1. Environment Configuration
+- Python 3.8 or higher
+- A Google Cloud Platform account with billing enabled (for Maps API)
 
-Ensure you have Python 3.8+ installed. Clone this repository and navigate to the project root.
+### Local Setup
 
-Create and activate a virtual environment:
+1. **Clone the repository:**
+```bash
+git clone https://github.com/Andrew-Tu225/delivery-route-building-system.git
+cd delivery-route-building-system
+```
 
-# Create the environment
+2. **Create a Virtual Environment:**
+```bash
+# Linux/macOS
 python -m venv venv
-
-# Activate (macOS/Linux)
 source venv/bin/activate
 
-# Activate (Windows)
-# venv\Scripts\activate
+# Windows
+python -m venv venv
+venv\Scripts\activate
+```
 
-
-Install required packages:
-
+3. **Install Dependencies:**
+```bash
 pip install -r requirements.txt
+```
 
+## 🔑 Google Maps API Configuration
 
-2. Google Maps API Setup
+This app requires **Maps JavaScript API** and **Places API**.
 
-This project requires access to Google Cloud Platform (GCP) services.
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Enable the **Maps JavaScript API** and **Places API**.
+3. Create an **API Key** in the Credentials section.
+4. Open `templates/index.html` and replace `YOUR_API_KEY` in the script tag at the bottom:
+```html
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+```
 
-Visit the Google Cloud Console.
+## 💻 Running the App
 
-Enable the following APIs for your project:
-
-Maps JavaScript API
-
-Places API
-
-Generate an API Key under "Credentials".
-
-Important: Open templates/index.html and locate the script tag at the bottom. Replace YOUR_API_KEY with your actual key:
-
-<script src="[https://maps.googleapis.com/...&key=YOUR_API_KEY](https://maps.googleapis.com/...&key=YOUR_API_KEY)"></script>
-
-
-💻 Running the App
-
-Start the server:
-
+Run the following command in your terminal:
+```bash
 python app.py
+```
 
+Then visit `http://127.0.0.1:5000` in your web browser.
 
-Access the UI:
-Open your browser and go to: http://127.0.0.1:5000
+## 📖 Usage Guide
 
-📖 Usage Guide
+1. **Initialize**: Wait for the map to load centered on the default location.
+2. **Set Hub**: Use the "Set Depot" search bar to find your starting point. Click "Set Depot".
+3. **Add Stops**: Enter delivery addresses in the "Add Points" section along with the capacity needed.
+4. **Plan**: Click "Generate Routes" to trigger the routing algorithm logic.
 
-Step
+## ⚙️ Tech Stack
 
-Action
+- **Backend**: Flask (Python)
+- **Frontend**: HTML5, JavaScript (ES6+), Tailwind CSS
+- **Mapping**: Google Maps JavaScript API, Google Places Library
+- **Icons**: Google Maps Standard Marker Set
 
-Description
+## 📄 License
 
-1. Set Depot
-
-Search for your hub in the "Set Depot" box. Click the green button to lock it as the start/end point.
-
-2. Add Stops
-
-Search for delivery points. Input the "Capacity Demand" (e.g., number of people) for that specific stop.
-
-3. Optimize
-
-Click "Generate Routes" to process the data and visualize the calculated paths.
-
-⚙️ Tech Stack
-
-Backend: Python / Flask
-
-Frontend: HTML5, JavaScript (ES6+), Tailwind CSS
-
-APIs: Google Maps JS SDK, Google Places API
-
-Icons: FontAwesome / Google Map Icons
-
-📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
